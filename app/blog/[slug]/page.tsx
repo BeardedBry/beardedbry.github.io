@@ -82,7 +82,7 @@ export default function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
+      <h1 className="title font-semibold text-3xl tracking-tighter">
         {post.metadata.title}
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
@@ -91,7 +91,7 @@ export default function Blog({ params }) {
         </p>
       </div>
       <article className="prose">
-        <CustomMDX source={post.content} />
+        <CustomMDX source={post.content} size="2xl" />
       </article>
     </section>
   )

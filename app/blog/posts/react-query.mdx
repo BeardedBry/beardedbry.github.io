@@ -1,0 +1,91 @@
+---
+title: 'React Query (Tanstack Query) - Make your life easier'
+publishedAt: '2026-04-12'
+summary: 'React Query (Tanstack Query) handles fetching, caching, updating, and more.'
+---
+
+
+<figure>
+  <img src="/images/pexels-brett-sayles-1597776.jpg" alt="Photo by Brett Sayles" />
+  <figcaption className="text-center text-sm text-gray-500">Photo by Brett Sayles</figcaption>
+</figure>
+
+In the year of our Lord 2026, I still see react devs manually setting up use state hooks for storing fetched data. Along with a use effect hook for actually triggering the fetch, and don't forget about error handling and loading states 🫠.
+
+React Query has made client side fetching and caching a breeze! And I'll share with you a few reasons why I love using it.
+and how to get started with it.
+
+## Reducing State Management
+
+As I mentioned above, here is an example of the code the uninitiated would write.
+
+```tsx
+const [data, setData] = useState(null);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
+
+useEffect(() => {
+
+  setLoading(true);
+
+  fetch('https://api.example.com/data').then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  }).then((data) => {
+    setData(data);
+    setLoading(false);
+  }).catch((error) => {
+    setError(error);
+    setLoading(false);
+  });
+}, []);
+
+```
+
+It's not the worst thing in the world, but what if you need multiple of these for a single component? Also it's just a pain to handle, and not to mention one more imporant fact.. This doesn't even include the benefits of caching.
+
+But before I get into that, here is a simple example of using React Query to accomplish the same thing seen above.
+
+```tsx
+const { data, isLoading, error } = useQuery({
+  queryKey: ['data'],
+  queryFn: () => fetch('https://api.example.com/data').then((res) => res.json()),
+});
+```
+🤯🤯🤯
+
+Even if this was all React Query did, it would be still be an ergonomic solution. But it does so much more.
+
+
+## Caching
+
+While working on a large project you may have multiple components that need to fetch the same data. Or maybe you have a heavy network request that you don't need refetched every time a component remounts. Well React query has you covered.
+
+```tsx
+const { data, isLoading, error } = useQuery({
+  queryKey: ['my-heavy-network-request'],
+  queryFn: () => fetch(...),
+  staleTime: 1000 * 60 * 5, // 5 minutes
+});
+```
+
+By default, a fetch is considered stale immediately after it is fetched. But we can change that by setting the `staleTime` option.
+Now if the component is mounted again, the data won't be need refetched if 5 minutes have not passed.
+
+Where this becomes powerful in an app making duplicate requests is when you use the same `queryKey` and function definition, React Query will know its the same call and use the internal cache.
+
+Meaning, no more prop drilling endlessly. Typically you would have to make sure a parent component makes the data fetch and then pass that data down to multiple child components. But with React Query, components can be much more modular and reusable by handling the data fetching themselves without the cost of redundant network requests!
+
+To be sure I use the same key and function definition, I'll typically use a custom hook to handle the query.
+
+```tsx
+export const useMyHeavyNetworkRequest = () => {
+  return useQuery({
+    queryKey: ['my-heavy-network-request'],
+    queryFn: () => fetch(...),
+  });
+};
+```
+Now I can use this hook in any component I need to fetch that data.

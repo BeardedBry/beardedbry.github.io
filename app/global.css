@@ -5,37 +5,94 @@
   color: #fefefe;
 }
 
-:root {
-  --sh-class: #2d5e9d;
-  --sh-identifier: #354150;
-  --sh-sign: #8996a3;
-  --sh-string: #007f7a;
-  --sh-keyword: #e02518;
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: #e25a1c;
+@theme {
+  --color-naples-yellow: #FADF57;
+  --color-russian-violet: #351158;
+  --color-delft-blue: #293D67;
+  --color-dark-purple: #1C072C;
+  --color-turquoise: #48E5D0;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  @theme {
+    --color-naples-yellow: #FADF57;
+    --color-russian-violet: #351158;
+    --color-delft-blue: #293D67;
+    --color-dark-purple: #1C072C;
+    --color-turquoise: #48E5D0;
     --sh-class: #4c97f8;
     --sh-identifier: white;
     --sh-keyword: #f47067;
     --sh-string: #0fa295;
   }
+}
+
+@layer base {
+  /* In @layer base so Tailwind preflight can’t strip the page background in dark mode */
   html {
+    min-width: 360px;
     color-scheme: dark;
+    background-color: rgb(10 11 14);
+    background-image: repeating-linear-gradient(
+      128deg,
+      rgb(10 11 14) 0px,
+      rgb(10 11 14) 2px,
+      rgb(17 19 24) 2px,
+      rgb(17 19 24) 5px
+    );
+    /* fixed + dark mode often drops backgrounds in WebKit */
+    background-attachment: scroll;
+  }
+
+  body {
+    background-color: transparent;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html {
+      color-scheme: dark;
+      background-color: rgb(10 11 14);
+      background-image: repeating-linear-gradient(
+        128deg,
+        rgb(10 11 14) 0px,
+        rgb(10 11 14) 2px,
+        rgb(17 19 24) 2px,
+        rgb(17 19 24) 5px
+      );
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    html {
+      color-scheme: light;
+      background-color: rgb(248 248 250);
+      background-image: repeating-linear-gradient(
+        128deg,
+        rgb(248 248 250) 0px,
+        rgb(248 248 250) 2px,
+        rgb(228 231 238) 2px,
+        rgb(228 231 238) 5px
+      );
+    }
+
+    /* Class-based dark (e.g. Tailwind): same stripes as system dark */
+    html.dark {
+      color-scheme: dark;
+      background-color: rgb(10 11 14);
+      background-image: repeating-linear-gradient(
+        128deg,
+        rgb(10 11 14) 0px,
+        rgb(10 11 14) 2px,
+        rgb(17 19 24) 2px,
+        rgb(17 19 24) 5px
+      );
+    }
   }
 }
 
-html {
-  min-width: 360px;
-}
 
 .prose .anchor {
   @apply absolute invisible no-underline;
-
   margin-left: -1em;
   padding-right: 0.5em;
   width: 80%;
@@ -84,7 +141,7 @@ html {
 }
 
 .prose p {
-  @apply my-4 text-neutral-800 dark:text-neutral-200;
+  @apply my-4 text-neutral-800 dark:text-neutral-200 text-xl leading-9 antialiased;
 }
 
 .prose h1 {
