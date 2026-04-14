@@ -52,9 +52,18 @@ export default function Footer() {
             <p className="ml-2 h-7">X</p>
           </a>
         </li>
+        <li>
+          <a
+            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            href="mailto:webdevbry@gmail.com"
+          >
+            <ArrowIcon />
+            <p className="ml-2 h-7">webdevbry@gmail.com</p>
+          </a>
+        </li>
       </ul>
       <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-        © {new Date().getFullYear()} Brian Burkard
+        © {new Date().getFullYear()} Web Dev Bry LLC
       </p>
     </footer>
   )
