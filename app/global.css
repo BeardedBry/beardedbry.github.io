@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
   font-family: 'Molot';
@@ -6,6 +7,19 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
+}
+
+:root {
+  /* sugar-high syntax tokens */
+  --sh-class: #4c97f8;
+  --sh-identifier: #f5f5f5;
+  --sh-sign: #9ca3af;
+  --sh-property: #f5f5f5;
+  --sh-entity: #f5f5f5;
+  --sh-jsxliterals: #f5f5f5;
+  --sh-string: #0fa295;
+  --sh-keyword: #f47067;
+  --sh-comment: #6b7280;
 }
 
 ::selection {
@@ -19,20 +33,6 @@
   --color-delft-blue: #293D67;
   --color-dark-purple: #1C072C;
   --color-turquoise: #48E5D0;
-}
-
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-naples-yellow: #FADF57;
-    --color-russian-violet: #351158;
-    --color-delft-blue: #293D67;
-    --color-dark-purple: #1C072C;
-    --color-turquoise: #48E5D0;
-    --sh-class: #4c97f8;
-    --sh-identifier: white;
-    --sh-keyword: #f47067;
-    --sh-string: #0fa295;
-  }
 }
 
 @layer base {
@@ -56,46 +56,6 @@
     background-color: transparent;
   }
 
-  @media (prefers-color-scheme: dark) {
-    html {
-      color-scheme: dark;
-      background-color: rgb(10 11 14);
-      background-image: repeating-linear-gradient(
-        128deg,
-        rgb(10 11 14) 0px,
-        rgb(10 11 14) 2px,
-        rgb(17 19 24) 2px,
-        rgb(17 19 24) 5px
-      );
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    html {
-      color-scheme: light;
-      background-color: rgb(248 248 250);
-      background-image: repeating-linear-gradient(
-        128deg,
-        rgb(248 248 250) 0px,
-        rgb(248 248 250) 2px,
-        rgb(228 231 238) 2px,
-        rgb(228 231 238) 5px
-      );
-    }
-
-    /* Class-based dark (e.g. Tailwind): same stripes as system dark */
-    html.dark {
-      color-scheme: dark;
-      background-color: rgb(10 11 14);
-      background-image: repeating-linear-gradient(
-        128deg,
-        rgb(10 11 14) 0px,
-        rgb(10 11 14) 2px,
-        rgb(17 19 24) 2px,
-        rgb(17 19 24) 5px
-      );
-    }
-  }
 }
 
 
