@@ -25,7 +25,7 @@ export function BlogPosts() {
               <p className="text-neutral-600 dark:text-neutral-400 w-[150px] tabular-nums">
                 {formatDate(post.metadata.publishedAt, false)}
               </p>
-              <p className="text-neutral-900 dark:text-neutral-100 tracking-tight">
+              <p className="text-blue-600 dark:text-blue-400 underline underline-offset-2 tracking-tight hover:text-blue-500 dark:hover:text-blue-300 transition-colors">
                 {post.metadata.title}
               </p>
             </div>
